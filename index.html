@@ -2042,7 +2042,7 @@ License: GPL-2+
           balance > 0n ? "receive" : balance < 0n ? "pay" : "";
         function messageText(r) {
           const lines = [
-            `Reparto de gastos: ${r.activity}`,
+            ...(r.activityName ? [`Reparto de gastos: ${r.activityName}`] : []),
             ...(r.date ? [dateLabel(r.date)] : []),
             `Total: ${Reparto.money(r.total)}`,
             "",
@@ -2622,7 +2622,11 @@ License: GPL-2+
             document
               .querySelectorAll("[aria-invalid]")
               .forEach((input) => setFieldError(input, ""));
-            result = { ...calculated, generatedAt: new Date().toISOString() };
+            result = {
+              ...calculated,
+              activityName: model.activity.trim(),
+              generatedAt: new Date().toISOString(),
+            };
             renderResult();
             try {
               preparedPdf = createPdfBlob(result);
