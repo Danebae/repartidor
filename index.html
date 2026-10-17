@@ -2558,7 +2558,6 @@ License: GPL-2+
           model.families.push(family);
           $("families-body").append(makeRow(family));
           changed();
-          $(family.id + "-name").focus();
         });
         // Delegation also covers newly added rows. Native date pickers keep
         // their own selection behavior; select() only affects editable text.
