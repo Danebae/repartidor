@@ -14,6 +14,8 @@
    - **Pagan como un adulto**: todos cuentan igual.
 6. Pulsa **Calcular reparto**.
 
+Al pie de la tabla puedes consultar el total de adultos y niños. Se actualiza al cambiar las familias.
+
 Los gastos se escriben como **12,50** o **12.50**, sin puntos de miles ni el símbolo del euro. Cada familia debe tener al menos una persona.
 
 ## Entender el resultado

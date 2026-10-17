@@ -217,6 +217,46 @@
         text-align: right;
         font-variant-numeric: tabular-nums;
       }
+      .families-table tfoot th,
+      .families-table tfoot td {
+        padding: 16px 7px 4px;
+        border-top: 1px solid var(--line);
+      }
+      .families-table tfoot th {
+        text-align: left;
+        font-size: 0.88rem;
+      }
+      .families-table tfoot td {
+        text-align: center;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      @media (max-width: 700px) {
+        .families-table tfoot {
+          display: block;
+        }
+        .families-table tfoot tr {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin: 4px 0 0;
+          padding: 12px 15px;
+          border: 0;
+          border-top: 1px solid var(--line);
+          border-radius: 0;
+          background: transparent;
+          gap: 6px 12px;
+        }
+        .families-table tfoot th {
+          grid-column: 1 / -1;
+          padding: 0;
+          border: 0;
+        }
+        .families-table tfoot td {
+          text-align: left;
+        }
+        .families-table tfoot .totals-spacer {
+          display: none;
+        }
+      }
       .delete {
         display: inline-flex;
         align-items: center;
@@ -825,6 +865,30 @@
               </tr>
             </thead>
             <tbody id="families-body"></tbody>
+            <tfoot>
+              <tr class="participant-totals">
+                <th scope="row">Total</th>
+                <td>
+                  <span class="mobile-label">Adultos</span
+                  ><output
+                    id="adults-count"
+                    aria-label="Total de adultos"
+                    aria-live="polite"
+                    >0</output
+                  >
+                </td>
+                <td>
+                  <span class="mobile-label">Niños</span
+                  ><output
+                    id="children-count"
+                    aria-label="Total de niños"
+                    aria-live="polite"
+                    >0</output
+                  >
+                </td>
+                <td class="totals-spacer" colspan="2"></td>
+              </tr>
+            </tfoot>
           </table>
           <div class="table-foot">
             <button
@@ -1872,7 +1936,29 @@ License: GPL-2+
             $(id).disabled = true;
           $("validation-summary").hidden = true;
         }
+        function updateParticipantTotals() {
+          for (const [field, id] of [
+            ["adults", "adults-count"],
+            ["children", "children-count"],
+          ]) {
+            const output = $(id);
+            try {
+              const total = model.families.reduce(
+                (sum, family) => sum + Reparto.integer(family[field]),
+                0n,
+              );
+              const text = total.toLocaleString("es-ES");
+              if (output.textContent !== text) output.textContent = text;
+              output.removeAttribute("title");
+            } catch {
+              if (output.textContent !== "—") output.textContent = "—";
+              output.title =
+                "Completa los valores válidos de esta columna para ver el total.";
+            }
+          }
+        }
         function changed() {
+          updateParticipantTotals();
           invalidate();
           Storage.save();
         }
@@ -1941,6 +2027,7 @@ License: GPL-2+
           const fragment = document.createDocumentFragment();
           for (const family of model.families) fragment.append(makeRow(family));
           $("families-body").replaceChildren(fragment);
+          updateParticipantTotals();
         }
         function displayErrors(errors) {
           document
