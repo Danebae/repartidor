@@ -23,7 +23,7 @@ El título muestra el gasto total y debajo aparece cuánto paga cada adulto.
 Pulsa **Balances** para desplegar el detalle de cada familia:
 
 - **Gastado**: lo que ha adelantado cada familia.
-- **Le corresponde**: su parte del gasto.
+- **Cuota**: la parte del gasto que le corresponde.
 - **Recibe**: tienen que devolverle dinero.
 - **Paga**: tiene que aportar dinero.
 - **Saldado**: no tiene nada pendiente.

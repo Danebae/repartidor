@@ -190,7 +190,7 @@
         width: 24%;
       }
       .families-table th:last-child {
-        width: 12%;
+        width: 32px;
         text-align: right;
       }
       .families-table td {
@@ -231,45 +231,25 @@
         font-weight: 700;
         font-variant-numeric: tabular-nums;
       }
-      @media (max-width: 700px) {
-        .families-table tfoot {
-          display: block;
-        }
-        .families-table tfoot tr {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
-          margin: 4px 0 0;
-          padding: 12px 15px;
-          border: 0;
-          border-top: 1px solid var(--line);
-          border-radius: 0;
-          background: transparent;
-          gap: 6px 12px;
-        }
-        .families-table tfoot th {
-          grid-column: 1 / -1;
-          padding: 0;
-          border: 0;
-        }
-        .families-table tfoot td {
-          padding: 0;
-          text-align: left;
-        }
-        .families-table tfoot .totals-spacer {
-          display: none;
-        }
-      }
       .delete {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         color: var(--red);
-        padding: 0.6rem;
-        width: 46px;
-        border-color: #edd8db;
-        background: #fffafb;
+        width: 24px;
+        min-height: 32px;
+        height: 32px;
+        padding: 0;
+        border: 0;
+        background: transparent;
       }
       .delete:hover {
-        background: var(--red-soft);
+        color: #862230;
+        background: transparent;
+      }
+      .delete svg {
+        width: 18px;
+        height: 18px;
       }
       .error {
         display: block;
@@ -277,9 +257,6 @@
         color: var(--red);
         margin-top: 0.35rem;
         line-height: 1.4;
-      }
-      .mobile-label {
-        display: none;
       }
       .add-family {
         display: grid;
@@ -562,92 +539,6 @@
           grid-template-columns: 1fr;
           gap: 16px;
         }
-        .families-table,
-        .families-table tbody {
-          display: block;
-        }
-        .families-table thead {
-          display: none;
-        }
-        .families-table tr {
-          display: grid;
-          grid-template-columns: 1fr 1fr auto;
-          gap: 12px;
-          border: 1px solid var(--line);
-          border-radius: 13px;
-          padding: 15px;
-          margin-bottom: 12px;
-          background: #fafbf8;
-        }
-        .families-table td,
-        .families-table td:first-child,
-        .families-table td:last-child {
-          border: 0;
-          padding: 0;
-          min-width: 0;
-        }
-        .families-table td:first-child {
-          grid-column: 1/3;
-          grid-row: 1;
-        }
-        .families-table td:nth-child(2) {
-          grid-column: 1;
-          grid-row: 2;
-        }
-        .families-table td:nth-child(3) {
-          grid-column: 2;
-          grid-row: 2;
-        }
-        .families-table td:nth-child(4) {
-          grid-column: 1/3;
-          grid-row: 3;
-        }
-        .families-table td:last-child {
-          grid-column: 3;
-          grid-row: 1;
-          align-self: end;
-        }
-        .mobile-label {
-          display: block;
-          color: var(--muted);
-          font-size: 0.75rem;
-          margin-bottom: 5px;
-        }
-        .families-table input[data-field="adults"],
-        .families-table input[data-field="children"] {
-          text-align: left;
-        }
-        .result-table,
-        .result-table tbody {
-          display: block;
-        }
-        .result-table thead {
-          display: none;
-        }
-        .result-table tr {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 9px 12px;
-          padding: 15px 0;
-          border-bottom: 1px solid var(--line);
-        }
-        .result-table td {
-          padding: 0;
-          border: 0;
-        }
-        .result-table td:first-child {
-          grid-column: 1/3;
-          font-weight: 700;
-        }
-        .result-table .mobile-label {
-          font-weight: 400;
-        }
-        .result-table .money {
-          text-align: left;
-        }
-        .result-table td:last-child {
-          align-self: end;
-        }
         .transfer {
           padding: 13px 10px;
           gap: 8px;
@@ -774,10 +665,6 @@
         background: var(--paper);
       }
       @media (max-width: 700px) {
-        .families-table tfoot td:nth-child(4) {
-          grid-column: 3;
-          grid-row: 2;
-        }
         .back-button {
           top: 6px;
           left: 10px;
@@ -795,6 +682,89 @@
       @media print {
         .back-button {
           display: none !important;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .families-table thead th {
+          font-size: 0.575rem;
+        }
+      }
+      @media (max-width: 700px) {
+        #families-section {
+          padding: 12px 10px;
+        }
+        .families-table th {
+          padding: 0 2px 7px;
+          font-size: 0.625rem;
+          white-space: nowrap;
+        }
+        .families-table th:first-child {
+          width: 34%;
+        }
+        .families-table th:nth-child(2) {
+          width: 16%;
+        }
+        .families-table th:nth-child(3) {
+          width: 14%;
+        }
+        .families-table th:nth-child(2),
+        .families-table th:nth-child(3) {
+          text-align: center;
+        }
+        .families-table th:nth-child(4) {
+          width: 26%;
+        }
+        .families-table th:last-child {
+          width: 24px;
+        }
+        .families-table td {
+          padding: 5px 2px;
+          vertical-align: top;
+        }
+        .families-table input {
+          padding: 5px 3px;
+          min-height: 34px;
+          height: 34px;
+          border-radius: 5px;
+          font-size: 0.75rem;
+        }
+        .families-table tfoot th,
+        .families-table tfoot td {
+          padding: 9px 2px 4px;
+          font-size: 0.7rem;
+          white-space: nowrap;
+        }
+        .families-table tfoot output {
+          font-size: 0.7rem;
+        }
+        .families-table .error {
+          font-size: 0.65rem;
+        }
+        .result-table {
+          font-size: 0.65rem;
+        }
+        .result-table th {
+          padding: 8px 3px;
+          font-size: 0.6rem;
+        }
+        .result-table th:first-child {
+          width: 23%;
+        }
+        .result-table th:last-child {
+          width: 19%;
+        }
+        .result-table td {
+          padding: 9px 3px;
+        }
+        .result-table td:first-child {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .result-table .badge {
+          padding: 2px 3px;
+          font-size: 0.6rem;
         }
       }
     </style>
@@ -866,11 +836,11 @@
             </caption>
             <thead>
               <tr>
-                <th scope="col">Familia / Persona</th>
+                <th scope="col">Familia</th>
                 <th scope="col">Adultos</th>
                 <th scope="col">Niños</th>
                 <th scope="col" style="text-align: right">Gastos (€)</th>
-                <th scope="col">Acción</th>
+                <th scope="col"><span class="sr-only">Acción</span></th>
               </tr>
             </thead>
             <tbody id="families-body"></tbody>
@@ -878,8 +848,7 @@
               <tr class="participant-totals">
                 <th scope="row">Total</th>
                 <td>
-                  <span class="mobile-label">Adultos</span
-                  ><output
+                  <output
                     id="adults-count"
                     aria-label="Total de adultos"
                     aria-live="polite"
@@ -887,8 +856,7 @@
                   >
                 </td>
                 <td>
-                  <span class="mobile-label">Niños</span
-                  ><output
+                  <output
                     id="children-count"
                     aria-label="Total de niños"
                     aria-live="polite"
@@ -896,8 +864,7 @@
                   >
                 </td>
                 <td class="totals-money">
-                  <span class="mobile-label">Gastos</span
-                  ><output
+                  <output
                     id="expenses-count"
                     aria-label="Total gastado"
                     aria-live="polite"
@@ -986,7 +953,9 @@
                 <tr>
                   <th scope="col">Familia</th>
                   <th scope="col" class="money">Gastado</th>
-                  <th scope="col" class="money">Le corresponde</th>
+                  <th scope="col" class="money" title="Le corresponde">
+                    Cuota
+                  </th>
                   <th scope="col" class="money">Saldo</th>
                   <th scope="col">Situación</th>
                 </tr>
@@ -2012,12 +1981,10 @@ License: GPL-2+
               input.inputMode = field === "expense" ? "decimal" : "numeric";
               input.maxLength = 1000;
             }
-            const mobile = node("label", "mobile-label", label);
-            mobile.htmlFor = input.id;
             const error = node("span", "error");
             error.id = input.id + "-error";
             error.hidden = true;
-            td.append(mobile, input, error);
+            td.append(input, error);
             tr.append(td);
           }
           const td = node("td"),
@@ -2109,19 +2076,16 @@ License: GPL-2+
           for (const family of r.rows) {
             const tr = node("tr");
             tr.append(node("td", "", family.label));
-            for (const [label, value, isBalance] of [
-              ["Gastado", family.expense, false],
-              ["Le corresponde", family.quota, false],
-              ["Saldo", family.balance, true],
+            for (const [value, isBalance] of [
+              [family.expense, false],
+              [family.quota, false],
+              [family.balance, true],
             ]) {
               const td = node(
                 "td",
                 "money" + (isBalance ? " " + tone(value) : ""),
               );
-              td.append(
-                node("span", "mobile-label", label),
-                node("span", "", Reparto.money(value, isBalance)),
-              );
+              td.append(node("span", "", Reparto.money(value, isBalance)));
               tr.append(td);
             }
             const td = node("td");
