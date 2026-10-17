@@ -236,7 +236,7 @@
           display: block;
         }
         .families-table tfoot tr {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
           margin: 4px 0 0;
           padding: 12px 15px;
           border: 0;
@@ -251,6 +251,7 @@
           border: 0;
         }
         .families-table tfoot td {
+          padding: 0;
           text-align: left;
         }
         .families-table tfoot .totals-spacer {
@@ -320,7 +321,7 @@
         align-items: center;
         justify-content: flex-end;
         gap: 12px;
-        margin-top: 16px;
+        margin-top: 0;
       }
       #clear-all {
         min-height: 52px;
@@ -366,40 +367,6 @@
       }
       .result-heading p {
         margin: 3px 0 0;
-      }
-      .stats {
-        display: grid;
-        grid-template-columns: 1.3fr repeat(3, 1fr);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        overflow: hidden;
-        margin: 20px 0;
-      }
-      .stat {
-        padding: 18px 20px;
-        border-right: 1px solid var(--line);
-        min-width: 0;
-      }
-      .stat:last-child {
-        border: 0;
-      }
-      .stat:first-child {
-        background: var(--accent-soft);
-      }
-      .stat dt {
-        font-size: 0.77rem;
-        color: var(--muted);
-        margin-bottom: 6px;
-      }
-      .stat dd {
-        margin: 0;
-        font-size: 1.3rem;
-        font-weight: 750;
-        overflow-wrap: anywhere;
-        font-variant-numeric: tabular-nums;
-      }
-      .stat:first-child dd {
-        color: var(--accent);
       }
       .criterion-note {
         font-size: 0.86rem;
@@ -650,21 +617,6 @@
         .families-table input[data-field="children"] {
           text-align: left;
         }
-        .stats {
-          grid-template-columns: 1fr 1fr;
-        }
-        .stat:nth-child(2) {
-          border-right: 0;
-        }
-        .stat:nth-child(-n + 2) {
-          border-bottom: 1px solid var(--line);
-        }
-        .stat {
-          padding: 15px;
-        }
-        .stat dd {
-          font-size: 1.12rem;
-        }
         .result-table,
         .result-table tbody {
           display: block;
@@ -788,6 +740,63 @@
           display: none !important;
         }
       }
+
+      .children-note {
+        margin: 14px 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.45;
+      }
+      .families-table tfoot .totals-money {
+        text-align: right;
+      }
+      .balances summary {
+        cursor: pointer;
+        font-weight: 650;
+        padding: 12px 0;
+      }
+      .balances[open] summary {
+        margin-bottom: 8px;
+      }
+      .back-button {
+        position: fixed;
+        top: 12px;
+        left: 16px;
+        z-index: 10;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        min-height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        color: var(--accent);
+        background: var(--paper);
+      }
+      @media (max-width: 700px) {
+        .families-table tfoot td:nth-child(4) {
+          grid-column: 3;
+          grid-row: 2;
+        }
+        .back-button {
+          top: 6px;
+          left: 10px;
+          width: 40px;
+          height: 40px;
+          min-height: 40px;
+        }
+        .calculate-row {
+          gap: 8px;
+        }
+        .table-foot {
+          gap: 8px;
+        }
+      }
+      @media print {
+        .back-button {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -886,10 +895,23 @@
                     >0</output
                   >
                 </td>
-                <td class="totals-spacer" colspan="2"></td>
+                <td class="totals-money">
+                  <span class="mobile-label">Gastos</span
+                  ><output
+                    id="expenses-count"
+                    aria-label="Total gastado"
+                    aria-live="polite"
+                    >0,00 €</output
+                  >
+                </td>
+                <td class="totals-spacer"></td>
               </tr>
             </tfoot>
           </table>
+          <p class="children-note">
+            Los niños pagan la mitad. Si no pagan, no los incluyas; si pagan
+            normal, cuéntalos como adultos.
+          </p>
           <div class="table-foot">
             <button
               id="add-family"
@@ -902,31 +924,20 @@
                 <path d="M12 5v14M5 12h14" />
               </svg>
             </button>
-          </div>
-        </section>
-        <section class="card" aria-label="Configuración del reparto">
-          <select
-            id="children-factor"
-            name="factor"
-            aria-label="Cómo pagan los niños"
-          >
-            <option value="0">Los niños no pagan</option>
-            <option value="0.5" selected>Los niños pagan la mitad</option>
-            <option value="1">Los niños pagan como un adulto</option>
-          </select>
-          <div class="calculate-row">
-            <button id="calculate" class="primary" type="submit">
-              Calcular reparto
-            </button>
-            <button
-              id="clear-all"
-              class="danger"
-              type="button"
-              title="Vaciar todos los datos"
-              aria-label="Vaciar todos los datos"
-            >
-              Vaciar
-            </button>
+            <div class="calculate-row">
+              <button id="calculate" class="primary" type="submit">
+                Calcular
+              </button>
+              <button
+                id="clear-all"
+                class="danger"
+                type="button"
+                title="Vaciar todos los datos"
+                aria-label="Vaciar todos los datos"
+              >
+                Vaciar
+              </button>
+            </div>
           </div>
           <p
             id="validation-summary"
@@ -946,6 +957,17 @@
         tabindex="-1"
         hidden
       >
+        <button
+          id="back-to-data"
+          class="back-button"
+          type="button"
+          title="Volver a los datos"
+          aria-label="Volver a los datos"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 12H5m7-7-7 7 7 7" />
+          </svg>
+        </button>
         <div class="card">
           <div class="result-heading">
             <div>
@@ -953,41 +975,25 @@
               <p id="result-activity" class="muted"></p>
             </div>
           </div>
-          <dl class="stats">
-            <div class="stat">
-              <dt>Total gastado</dt>
-              <dd id="total-spent"></dd>
-            </div>
-            <div class="stat">
-              <dt>Familias</dt>
-              <dd id="total-families"></dd>
-            </div>
-            <div class="stat">
-              <dt>Adultos</dt>
-              <dd id="total-adults"></dd>
-            </div>
-            <div class="stat">
-              <dt>Niños</dt>
-              <dd id="total-children"></dd>
-            </div>
-          </dl>
           <p id="criterion-note" class="criterion-note"></p>
-          <h3>Balances</h3>
-          <table class="result-table">
-            <caption class="sr-only">
-              Gastos, cuotas y saldos de cada familia
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Familia</th>
-                <th scope="col" class="money">Gastado</th>
-                <th scope="col" class="money">Le corresponde</th>
-                <th scope="col" class="money">Saldo</th>
-                <th scope="col">Situación</th>
-              </tr>
-            </thead>
-            <tbody id="balance-body"></tbody>
-          </table>
+          <details id="balances" class="balances">
+            <summary>Balances</summary>
+            <table class="result-table">
+              <caption class="sr-only">
+                Gastos, cuotas y saldos de cada familia
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Familia</th>
+                  <th scope="col" class="money">Gastado</th>
+                  <th scope="col" class="money">Le corresponde</th>
+                  <th scope="col" class="money">Saldo</th>
+                  <th scope="col">Situación</th>
+                </tr>
+              </thead>
+              <tbody id="balance-body"></tbody>
+            </table>
+          </details>
         </div>
         <div class="card">
           <h2>¿Quién paga a quién?</h2>
@@ -1825,7 +1831,8 @@ License: GPL-2+
           preparedPdf = null,
           storageBlocked = false,
           modalAction = null,
-          previousFocus = null;
+          previousFocus = null,
+          editorScroll = 0;
         const warning = (message) => {
           $("storage-warning").textContent = message;
           $("storage-warning").hidden = false;
@@ -1872,7 +1879,7 @@ License: GPL-2+
               return {
                 activity: value.activity,
                 date: value.date,
-                factor: value.factor,
+                factor: "0.5",
                 families: value.families.map((f) => ({
                   id: f.id,
                   name: f.name,
@@ -1932,22 +1939,31 @@ License: GPL-2+
           result = null;
           preparedPdf = null;
           $("results").hidden = true;
+          $("expense-form").hidden = false;
           for (const id of ["download-pdf", "share-whatsapp", "copy-message"])
             $(id).disabled = true;
           $("validation-summary").hidden = true;
         }
-        function updateParticipantTotals() {
+        function updateDraftTotals() {
           for (const [field, id] of [
             ["adults", "adults-count"],
             ["children", "children-count"],
+            ["expense", "expenses-count"],
           ]) {
             const output = $(id);
             try {
               const total = model.families.reduce(
-                (sum, family) => sum + Reparto.integer(family[field]),
+                (sum, family) =>
+                  sum +
+                  (field === "expense"
+                    ? Reparto.cents(family[field])
+                    : Reparto.integer(family[field])),
                 0n,
               );
-              const text = total.toLocaleString("es-ES");
+              const text =
+                field === "expense"
+                  ? Reparto.money(total)
+                  : total.toLocaleString("es-ES");
               if (output.textContent !== text) output.textContent = text;
               output.removeAttribute("title");
             } catch {
@@ -1958,7 +1974,7 @@ License: GPL-2+
           }
         }
         function changed() {
-          updateParticipantTotals();
+          updateDraftTotals();
           invalidate();
           Storage.save();
         }
@@ -2023,11 +2039,10 @@ License: GPL-2+
         function renderModel() {
           $("activity").value = model.activity;
           $("activity-date").value = model.date;
-          $("children-factor").value = model.factor;
           const fragment = document.createDocumentFragment();
           for (const family of model.families) fragment.append(makeRow(family));
           $("families-body").replaceChildren(fragment);
-          updateParticipantTotals();
+          updateDraftTotals();
         }
         function displayErrors(errors) {
           document
@@ -2082,18 +2097,14 @@ License: GPL-2+
           const r = result;
           $("result-activity").textContent =
             r.activity + (r.date ? " · " + dateLabel(r.date) : "");
-          $("total-spent").textContent = Reparto.money(r.total);
-          $("total-families").textContent =
-            r.rows.length.toLocaleString("es-ES");
-          $("total-adults").textContent = r.adults.toLocaleString("es-ES");
-          $("total-children").textContent = r.children.toLocaleString("es-ES");
+          $("results-title").textContent = "Reparto " + Reparto.money(r.total);
           $("criterion-note").textContent =
-            Reparto.criteria[r.factor] +
-            (r.weight > 0n
-              ? " · Coste por unidad ponderada: " +
-                Reparto.unitCost(r) +
-                " (aproximado)."
-              : " · Total cero: no hay unidades económicas ni deudas.");
+            "Cada adulto paga: " +
+            (Reparto.unitCost(r) ?? "0,0000 €/unidad").replace(
+              " €/unidad",
+              " €",
+            );
+          $("balances").open = false;
           const balanceFragment = document.createDocumentFragment();
           for (const family of r.rows) {
             const tr = node("tr");
@@ -2148,6 +2159,7 @@ License: GPL-2+
           $("dirty-notice").hidden = true;
           for (const id of ["download-pdf", "share-whatsapp", "copy-message"])
             $(id).disabled = false;
+          $("expense-form").hidden = true;
           $("results").hidden = false;
         }
         // PDF composition. No screenshot, html plugin, AutoTable or network requests.
@@ -2614,15 +2626,12 @@ License: GPL-2+
             setFieldError(event.target, "");
             changed();
           });
-        $("children-factor").addEventListener("change", (event) => {
-          model.factor = event.target.value;
-          changed();
-        });
         $("expense-form").addEventListener("submit", (event) => {
           event.preventDefault();
+          editorScroll = window.scrollY;
           invalidate();
           try {
-            const calculated = Reparto.calculate(model);
+            const calculated = Reparto.calculate({ ...model, factor: "0.5" });
             if (calculated.errors.length) {
               displayErrors(calculated.errors);
               return;
@@ -2644,6 +2653,12 @@ License: GPL-2+
               "No se ha podido completar el reparto. " + error.message;
             $("validation-summary").hidden = false;
           }
+        });
+        $("back-to-data").addEventListener("click", () => {
+          $("results").hidden = true;
+          $("expense-form").hidden = false;
+          $("calculate").focus({ preventScroll: true });
+          window.scrollTo({ top: editorScroll, behavior: "auto" });
         });
         $("download-pdf").addEventListener("click", () => {
           try {

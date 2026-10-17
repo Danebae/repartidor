@@ -8,19 +8,19 @@
 2. Pulsa **+** para añadir una familia o persona.
 3. Escribe su nombre, cuántos adultos y niños participan y cuánto dinero ha adelantado. Si no ha pagado nada, pon **0**.
 4. Añade al resto de familias del mismo modo. Puedes corregir los campos directamente y usar la papelera de una fila para quitarla.
-5. Elige cómo pagan los niños:
-   - **No pagan**: el gasto se reparte solo entre los adultos.
-   - **Pagan la mitad**: cada niño cuenta como medio adulto.
-   - **Pagan como un adulto**: todos cuentan igual.
-6. Pulsa **Calcular reparto**.
+5. Pulsa **Calcular**.
 
-Al pie de la tabla puedes consultar el total de adultos y niños. Se actualiza al cambiar las familias.
+Los niños pagan siempre la mitad. Si no pagan, no los incluyas; si pagan como un adulto, súmalos a los adultos.
+
+Al pie de la tabla puedes consultar los totales de adultos, niños y dinero. Se actualizan al cambiar las familias. Los botones **+**, **Calcular** y **Vaciar** están en la misma fila.
 
 Los gastos se escriben como **12,50** o **12.50**, sin puntos de miles ni el símbolo del euro. Cada familia debe tener al menos una persona.
 
 ## Entender el resultado
 
-El resumen muestra el total gastado y los participantes. En los balances verás:
+El título muestra el gasto total y debajo aparece cuánto paga cada adulto.
+
+Pulsa **Balances** para desplegar el detalle de cada familia:
 
 - **Gastado**: lo que ha adelantado cada familia.
 - **Le corresponde**: su parte del gasto.
@@ -30,7 +30,7 @@ El resumen muestra el total gastado y los participantes. En los balances verás:
 
 En **¿Quién paga a quién?** aparecen los pagos concretos que hay que hacer. Si no hay transferencias pendientes, las cuentas ya están saldadas.
 
-Si cambias algún dato, pulsa otra vez **Calcular reparto** para actualizar el resultado.
+Usa la **flecha de arriba a la izquierda** para volver a los datos y corregirlos. Se conserva lo que has escrito. Pulsa **Calcular** para ver el resultado actualizado; los balances vuelven a aparecer plegados.
 
 ## Compartir las cuentas
 
@@ -49,6 +49,6 @@ Si aparece un aviso de que no se han podido guardar, conserva tus cuentas antes 
 
 ## Empezar de nuevo
 
-Pulsa **Vaciar**, a la derecha de **Calcular reparto**, y confirma el borrado. Se eliminarán la actividad, las familias y sus gastos. **Cancelar** conserva todo.
+Pulsa **Vaciar**, a la derecha de **Calcular**, y confirma el borrado. Se eliminarán la actividad, las familias y sus gastos. **Cancelar** conserva todo.
 
 El botón azul **i**, fijo arriba a la derecha, abre estas instrucciones.
