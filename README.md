@@ -36,8 +36,8 @@ Usa la **flecha de arriba a la izquierda** para volver a los datos y corregirlos
 
 - **Descargar PDF** guarda un informe con los gastos, los balances y los pagos pendientes.
 - **Compartir por WhatsApp** abre el menú de compartir del teléfono cuando esté disponible. Elige WhatsApp y la conversación o grupo.
-- Si el navegador abre WhatsApp Web, el PDF se guarda primero. Selecciona el grupo y adjunta ese archivo manualmente.
-- **Copiar mensaje** prepara un texto para acompañar al informe. Si no se copia automáticamente, selecciona el texto y cópialo desde tu teléfono u ordenador.
+- Si el navegador no permite compartir el archivo, WhatsApp se abre con el total y los pagos en texto. Elige la conversación o grupo y envíalo. El PDF solo se guarda cuando pulsas **Descargar PDF**; después puedes adjuntarlo tú.
+- **Copiar mensaje** copia el total y todos los pagos pendientes para pegarlos en una conversación. Si no se copia automáticamente, selecciona el texto y cópialo desde tu teléfono u ordenador.
 
 El envío se completa en WhatsApp. El repartidor no elige el grupo ni envía el documento por su cuenta.
 

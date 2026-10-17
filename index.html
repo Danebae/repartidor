@@ -985,21 +985,16 @@
             </button>
           </div>
           <label for="share-message" class="sr-only"
-            >Mensaje para acompañar al PDF</label
+            >Reparto para compartir</label
           ><textarea id="share-message" readonly></textarea>
           <p id="share-status" role="status" aria-live="polite"></p>
           <div id="whatsapp-fallback" hidden>
-            <p>
-              El PDF se ha preparado para descargar. Selecciona el grupo en
-              WhatsApp Web y adjunta el archivo desde Descargas. El envío lo
-              completas tú.
-            </p>
             <a
               id="open-whatsapp"
-              href="https://web.whatsapp.com/"
+              href="https://wa.me/"
               target="_blank"
               rel="noopener noreferrer"
-              >Abrir WhatsApp Web</a
+              >Abrir WhatsApp con los pagos en texto</a
             >
           </div>
         </div>
@@ -2046,7 +2041,21 @@ License: GPL-2+
         const tone = (balance) =>
           balance > 0n ? "receive" : balance < 0n ? "pay" : "";
         function messageText(r) {
-          return `Reparto de gastos de ${r.activity}. Total: ${Reparto.money(r.total)}. Adjunto el PDF con los saldos y las transferencias.`;
+          const lines = [
+            `Reparto de gastos: ${r.activity}`,
+            ...(r.date ? [dateLabel(r.date)] : []),
+            `Total: ${Reparto.money(r.total)}`,
+            "Los niños pagan la mitad.",
+            "",
+            "¿Quién paga a quién?",
+          ];
+          if (r.transfers.length)
+            for (const transfer of r.transfers)
+              lines.push(
+                `${r.rows[transfer.from].label} → ${r.rows[transfer.to].label}: ${Reparto.money(transfer.amount)}`,
+              );
+          else lines.push("No hay transferencias pendientes.");
+          return lines.join("\n");
         }
         function filename(r) {
           const slug =
@@ -2377,76 +2386,82 @@ License: GPL-2+
             error.message ||
             "No se ha podido preparar el informe. Vuelve a calcular e inténtalo de nuevo.";
         }
-        function fallbackShare(blob) {
-          downloadBlob(blob, filename(result));
+        function fallbackShare(reason, open = false) {
           const link = $("open-whatsapp");
           link.href =
-            "https://web.whatsapp.com/?text=" +
-            encodeURIComponent(messageText(result));
+            "https://wa.me/?text=" + encodeURIComponent(messageText(result));
           $("whatsapp-fallback").hidden = false;
           $("share-status").textContent =
-            "Adjunta el PDF descargado manualmente. Si no se ha abierto WhatsApp Web, utiliza el enlace de abajo.";
-          window.open(link.href, "_blank", "noopener,noreferrer");
+            reason +
+            " Puedes enviar los pagos en texto o usar Descargar PDF para adjuntarlo tú.";
+          // Only open during the original click, never after a rejected promise.
+          // No automatic downloads: saving a PDF belongs to its own button.
+          if (open) link.click();
         }
-        // No await before share(): the file is prepared on Calculate and the native
-        // share call runs directly in the click handler, preserving user activation.
+        function shareFailure(error, version) {
+          if (result !== version) return;
+          if (error.name === "AbortError")
+            $("share-status").textContent =
+              "Se ha cancelado la acción de compartir.";
+          else
+            fallbackShare(
+              "No se ha podido compartir el PDF desde este navegador.",
+            );
+        }
+        // No await before share(): reuse the prepared Blob and preserve activation.
         function share() {
+          if (!result) return;
+          const version = result;
+          $("whatsapp-fallback").hidden = true;
+          $("share-status").textContent = "";
           try {
-            if (!result) return;
-            const blob = pdf();
-            const file =
-              typeof File === "function"
-                ? new File([blob], filename(result), {
-                    type: "application/pdf",
-                  })
-                : null;
-            let supported = false;
-            try {
-              supported = !!(
-                file &&
-                navigator.share &&
-                navigator.canShare &&
-                navigator.canShare({ files: [file] })
+            if (
+              typeof navigator.share !== "function" ||
+              typeof File !== "function"
+            ) {
+              fallbackShare(
+                "Este navegador no permite compartir el PDF directamente.",
+                true,
               );
-            } catch {
-              supported = false;
-            }
-            if (!supported) {
-              fallbackShare(blob);
               return;
             }
+            const file = new File([pdf()], filename(result), {
+              type: "application/pdf",
+            });
+            const payload = { files: [file] };
+            // Missing canShare is not proof that share itself is unavailable.
+            // A throwing capability check is also inconclusive: try the real API.
+            if (typeof navigator.canShare === "function") {
+              let supported;
+              try {
+                supported = navigator.canShare(payload);
+              } catch {
+                supported = undefined;
+              }
+              if (supported === false) {
+                fallbackShare(
+                  "Este navegador no permite compartir el PDF directamente.",
+                  true,
+                );
+                return;
+              }
+            }
             $("share-whatsapp").disabled = true;
-            const version = result;
+            // File only: mixing text with attachments can hide WhatsApp or drop
+            // the file on some share targets. The message has its own Copy button.
             navigator
-              .share({
-                files: [file],
-                title: "Reparto de gastos · " + result.activity,
-                text: messageText(result),
-              })
+              .share(payload)
               .then(() => {
                 if (result === version)
                   $("share-status").textContent =
-                    "Se ha cerrado el menú de compartir. Comprueba el envío en la aplicación que has elegido.";
+                    "Comprueba el envío en la aplicación que has elegido.";
               })
-              .catch((error) => {
-                if (result !== version) return;
-                if (error.name === "AbortError")
-                  $("share-status").textContent =
-                    "Se ha cancelado la acción de compartir. Tus datos siguen guardados.";
-                else {
-                  $("share-status").textContent =
-                    "El navegador no ha permitido compartir el archivo. Descarga el PDF y adjúntalo en WhatsApp.";
-                  $("whatsapp-fallback").hidden = false;
-                  $("open-whatsapp").href =
-                    "https://web.whatsapp.com/?text=" +
-                    encodeURIComponent(messageText(result));
-                }
-              })
+              .catch((error) => shareFailure(error, version))
               .finally(() => {
                 if (result === version) $("share-whatsapp").disabled = false;
               });
           } catch (error) {
-            showShareError(error);
+            shareFailure(error, version);
             $("share-whatsapp").disabled = !result;
           }
         }
