@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#176b56" />
+    <meta name="theme-color" content="#6d4fc2" />
     <meta
       name="description"
       content="Reparte los gastos de tu cuadrilla entre familias, ajusta las cuentas al céntimo y comparte el PDF. Funciona sin conexión."
@@ -12,14 +12,14 @@
     <style>
       :root {
         color-scheme: light;
-        --ink: #203b33;
-        --muted: #62736d;
-        --green: #176b56;
-        --green-dark: #10513f;
-        --green-soft: #eaf4ee;
+        --ink: #302b3d;
+        --muted: #716b7e;
+        --accent: #6d4fc2;
+        --accent-hover: #593cac;
+        --accent-soft: #f1ecfb;
         --paper: #fff;
-        --bg: #f5f6f1;
-        --line: #dce4de;
+        --bg: #f7f5fa;
+        --line: #e2ddeb;
         --red: #a62d3c;
         --red-soft: #fff0f1;
         --radius: 20px;
@@ -128,7 +128,7 @@
         margin-bottom: 0.85rem;
       }
       a {
-        color: var(--green);
+        color: var(--accent);
       }
       [hidden] {
         display: none !important;
@@ -156,7 +156,7 @@
         border-radius: var(--radius);
         padding: 26px;
         margin-bottom: 20px;
-        box-shadow: 0 3px 15px #203b3303;
+        box-shadow: 0 3px 15px #302b3d03;
       }
       .activity-fields {
         display: grid;
@@ -248,12 +248,12 @@
         width: 46px;
         height: 46px;
         border-radius: 50%;
-        background: var(--green);
+        background: var(--accent);
         color: #fff;
-        border-color: var(--green);
+        border-color: var(--accent);
       }
       .add-family:hover {
-        background: var(--green-dark);
+        background: var(--accent-hover);
       }
       .add-family svg {
         width: 24px;
@@ -282,23 +282,21 @@
         gap: 12px;
         margin-top: 16px;
       }
-      .clear-all {
-        width: 52px;
+      #clear-all {
         min-height: 52px;
         flex: none;
-        border-radius: 50%;
       }
       .primary {
-        background: var(--green);
+        background: var(--accent);
         color: #fff;
-        border-color: var(--green);
+        border-color: var(--accent);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 0.6rem;
       }
       .primary:hover {
-        background: var(--green-dark);
+        background: var(--accent-hover);
       }
       #calculate {
         min-height: 52px;
@@ -346,7 +344,7 @@
         border: 0;
       }
       .stat:first-child {
-        background: var(--green-soft);
+        background: var(--accent-soft);
       }
       .stat dt {
         font-size: 0.77rem;
@@ -361,7 +359,7 @@
         font-variant-numeric: tabular-nums;
       }
       .stat:first-child dd {
-        color: var(--green);
+        color: var(--accent);
       }
       .criterion-note {
         font-size: 0.86rem;
@@ -414,7 +412,7 @@
       }
       .badge.receive {
         color: #146349;
-        background: var(--green-soft);
+        background: var(--accent-soft);
       }
       .badge.pay {
         color: var(--red);
@@ -739,6 +737,11 @@
         #calculate {
           flex: 1;
         }
+        #calculate,
+        #clear-all {
+          padding-inline: 0.5rem;
+          font-size: 0.95rem;
+        }
       }
       @media print {
         .info-button {
@@ -853,14 +856,12 @@
             </button>
             <button
               id="clear-all"
-              class="delete clear-all"
+              class="danger"
               type="button"
-              title="Borrar todos los datos"
-              aria-label="Borrar todos los datos"
+              title="Vaciar todos los datos"
+              aria-label="Vaciar todos los datos"
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" />
-              </svg>
+              Vaciar
             </button>
           </div>
           <p
@@ -1821,7 +1822,7 @@ License: GPL-2+
               // reset before saving, so a browser problem cannot destroy old data.
               storageBlocked = true;
               warning(
-                "No se han podido recuperar los datos guardados. Se conservan sin sobrescribir. Puedes trabajar en esta pestaña; para volver a guardar, usa el botón Borrar todos los datos.",
+                "No se han podido recuperar los datos guardados. Se conservan sin sobrescribir. Puedes trabajar en esta pestaña; para volver a guardar, usa Vaciar.",
               );
               return blank();
             }
@@ -1904,7 +1905,7 @@ License: GPL-2+
             input.setAttribute("aria-describedby", input.id + "-error");
             if (field === "name") {
               input.maxLength = 160;
-              input.placeholder = "Ej. Jon y Maite";
+              input.placeholder = "Chicote y Amaia";
             } else {
               input.inputMode = field === "expense" ? "decimal" : "numeric";
               input.maxLength = 1000;
@@ -2088,9 +2089,9 @@ License: GPL-2+
             width = 180,
             bottom = 279;
           let y = 19;
-          const ink = [32, 59, 51],
-            muted = [98, 115, 109],
-            green = [23, 107, 86];
+          const ink = [48, 43, 61],
+            muted = [113, 107, 126],
+            accent = [109, 79, 194];
           const setText = (size = 9, color = ink) => {
             doc.setFontSize(size);
             doc.setTextColor(...color);
@@ -2118,12 +2119,12 @@ License: GPL-2+
           function heading(text) {
             ensure(35);
             y += 5;
-            paragraph(text, 13, green);
+            paragraph(text, 13, accent);
           }
-          setText(20, green);
+          setText(20, accent);
           doc.text("Reparto de gastos", margin, y);
           y += 8;
-          setText(14, green);
+          setText(14, accent);
           doc.text("de la cuadrilla", margin, y);
           y += 11;
           paragraph(r.activity, 14);
@@ -2140,7 +2141,7 @@ License: GPL-2+
             `${r.rows.length.toLocaleString("es-ES")} familias · ${r.adults.toLocaleString("es-ES")} adultos · ${r.children.toLocaleString("es-ES")} niños`,
             10,
           );
-          paragraph("TOTAL GASTADO: " + Reparto.money(r.total), 14, green);
+          paragraph("TOTAL GASTADO: " + Reparto.money(r.total), 14, accent);
           paragraph("Criterio: " + Reparto.criteria[r.factor], 9);
           if (r.weight > 0n)
             paragraph(
@@ -2159,9 +2160,9 @@ License: GPL-2+
           function table(headers, rows, widths, numericColumns) {
             function header() {
               ensure(11);
-              doc.setFillColor(234, 244, 238);
+              doc.setFillColor(241, 236, 251);
               doc.rect(margin, y, width, 9, "F");
-              setText(8, green);
+              setText(8, accent);
               let x = margin;
               headers.forEach((text, i) => {
                 doc.text(
@@ -2259,7 +2260,7 @@ License: GPL-2+
           );
           heading("3. ¿Quién paga a quién?");
           if (!r.transfers.length)
-            paragraph("No hay transferencias pendientes.", 10, green);
+            paragraph("No hay transferencias pendientes.", 10, accent);
           else
             r.transfers.forEach((t, i) => {
               const text = `${i + 1}. ${r.rows[t.from].label} → ${r.rows[t.to].label}: ${Reparto.money(t.amount)}`;
@@ -2267,7 +2268,7 @@ License: GPL-2+
               const lines = doc.splitTextToSize(text, width - 10),
                 height = lines.length * 4.7 + 9;
               ensure(height);
-              doc.setFillColor(240, 246, 240);
+              doc.setFillColor(247, 244, 252);
               doc.roundedRect(margin, y, width, height, 2, 2, "F");
               doc.setTextColor(...ink);
               doc.text(lines, margin + 5, y + 6, { lineHeightFactor: 1.3 });

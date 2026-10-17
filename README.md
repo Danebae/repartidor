@@ -1,82 +1,52 @@
-# Repartidor · Gastos de la cuadrilla
+# Repartir los gastos de la cuadrilla
 
-Aplicación web para repartir los gastos de una comida, excursión, barbacoa o fin de semana entre unidades familiares. Calcula cuánto corresponde a cada familia, quién debe pagar o recibir y las transferencias concretas para saldar las cuentas.
+[Volver al repartidor](https://danebae.github.io/repartidor/)
 
-**Solo necesitas `index.html` y un navegador moderno.** Funciona con doble clic, sin instalar nada, sin servidor y sin conexión, incluida la generación de PDF.
+## Introducir los datos
 
-## Empezar
+1. Escribe la **actividad** y, si quieres, su fecha.
+2. Pulsa **+** para añadir una familia o persona.
+3. Escribe su nombre, cuántos adultos y niños participan y cuánto dinero ha adelantado. Si no ha pagado nada, pon **0**.
+4. Añade al resto de familias del mismo modo. Puedes corregir los campos directamente y usar la papelera de una fila para quitarla.
+5. Elige cómo pagan los niños:
+   - **No pagan**: el gasto se reparte solo entre los adultos.
+   - **Pagan la mitad**: cada niño cuenta como medio adulto.
+   - **Pagan como un adulto**: todos cuentan igual.
+6. Pulsa **Calcular reparto**.
 
-1. Descarga el repositorio desde **Code → Download ZIP**, descomprime y abre `index.html` con tu navegador. También puedes clonar por SSH:
+Los gastos se escriben como **12,50** o **12.50**, sin puntos de miles ni el símbolo del euro. Cada familia debe tener al menos una persona.
 
-   ```sh
-   git clone git@github.com:Danebae/repartidor.git
-   ```
+## Entender el resultado
 
-2. Escribe el nombre en el campo **Actividad** y, si quieres, introduce la fecha.
-3. Pulsa el botón verde **+** para añadir una familia. Introduce un nombre, el número de adultos y niños y el dinero que ha adelantado cada familia. Repite para todas las participantes.
-4. En el selector, elige cómo cuentan los niños: **no pagan**, **pagan la mitad** o **pagan como un adulto**.
-5. Pulsa **Calcular reparto** y revisa los balances y **¿Quién paga a quién?**.
-6. Descarga el PDF o utiliza **Compartir por WhatsApp**.
+El resumen muestra el total gastado y los participantes. En los balances verás:
 
-El botón azul de información, fijo en la esquina superior derecha y más pequeño en móvil, abre estas instrucciones en GitHub. Ese enlace necesita conexión; el cálculo y el PDF funcionan sin ella.
+- **Gastado**: lo que ha adelantado cada familia.
+- **Le corresponde**: su parte del gasto.
+- **Recibe**: tienen que devolverle dinero.
+- **Paga**: tiene que aportar dinero.
+- **Saldado**: no tiene nada pendiente.
 
-## Familias e importes
+En **¿Quién paga a quién?** aparecen los pagos concretos que hay que hacer. Si no hay transferencias pendientes, las cuentas ya están saldadas.
 
-- Cada fila representa una unidad familiar; puede tener uno o varios adultos, solo niños o cualquier combinación con al menos una persona.
-- Las familias que no hayan adelantado dinero también participan. Introduce **0** en sus gastos.
-- Puedes añadir y eliminar familias. El borrado exige confirmación.
-- Introduce euros como `12,50` o `12.50`, con hasta dos decimales y **sin separadores de miles ni símbolo €**. No se aceptan importes negativos, valores vacíos o formatos ambiguos.
-- Los adultos y niños son enteros no negativos. Cada familia necesita un nombre. No hay un límite de familias impuesto por la aplicación.
-- El nombre de actividad es opcional; si queda vacío, el informe utiliza «Actividad de la cuadrilla».
+Si cambias algún dato, pulsa otra vez **Calcular reparto** para actualizar el resultado.
 
-## Cómo se calcula
+## Compartir las cuentas
 
-El peso de cada familia es `adultos + niños × factor`, con factor 0, 0,5 o 1. El gasto se reparte proporcionalmente a esos pesos.
+- **Descargar PDF** guarda un informe con los gastos, los balances y los pagos pendientes.
+- **Compartir por WhatsApp** abre el menú de compartir del teléfono cuando esté disponible. Elige WhatsApp y la conversación o grupo.
+- Si el navegador abre WhatsApp Web, el PDF se guarda primero. Selecciona el grupo y adjunta ese archivo manualmente.
+- **Copiar mensaje** prepara un texto para acompañar al informe. Si no se copia automáticamente, selecciona el texto y cópialo desde tu teléfono u ordenador.
 
-Los importes y operaciones monetarias se calculan con **céntimos enteros y BigInt**. Primero se trunca la cuota de cada familia; después se reparten los céntimos sobrantes por el método de los mayores restos. Los empates se resuelven por orden de aparición. Las cuotas suman exactamente el gasto total y los saldos suman cero.
+El envío se completa en WhatsApp. El repartidor no elige el grupo ni envía el documento por su cuenta.
 
-Una familia con peso cero no paga cuota y recupera íntegramente cualquier dinero adelantado. Si todos los pesos son cero y hay gastos, la aplicación pide cambiar los participantes o el criterio. Con gasto cero no genera deudas ni transferencias.
+## Volver otro día
 
-Las transferencias emparejan los mayores deudores y acreedores de forma determinista. Se comprueba que cada familia pague y reciba exactamente su saldo; no se busca la minimización matemática absoluta de pagos.
+Los datos se conservan en el mismo navegador y dispositivo mientras no borres sus datos. No se comparten automáticamente con otros teléfonos u ordenadores. En navegación privada pueden perderse al cerrar.
 
-El importe individual y el gasto total deben caber en **9.007.199.254.740.991 céntimos**. El coste por unidad mostrado es informativo y aproximado; no se utiliza para recalcular las cuotas.
+Si aparece un aviso de que no se han podido guardar, conserva tus cuentas antes de cerrar la página.
 
-## PDF y WhatsApp
+## Empezar de nuevo
 
-El PDF incluye la actividad, las fechas, el resumen, los integrantes, los anticipos, las cuotas, los saldos y las transferencias. Se genera como texto y tablas A4, con paginación automática y caracteres españoles. **jsPDF y la fuente están integrados en el HTML:** no se descarga ninguna biblioteca al usarlo.
+Pulsa **Vaciar**, a la derecha de **Calcular reparto**, y confirma el borrado. Se eliminarán la actividad, las familias y sus gastos. **Cancelar** conserva todo.
 
-- **Descargar PDF** guarda el informe para revisarlo, imprimirlo o enviarlo.
-- **Compartir por WhatsApp** utiliza el menú del sistema si el navegador permite compartir archivos. Elige WhatsApp y la conversación o grupo. La aplicación no elige destinatarios ni acredita que el envío se haya completado.
-- Si el navegador no permite compartir el archivo, se descarga el PDF y se abre **WhatsApp Web**. Selecciona el grupo y adjunta manualmente el documento. Si se bloquea la ventana, usa el enlace que aparece en pantalla.
-- **Copiar mensaje** copia un texto de acompañamiento. Si el navegador bloquea el portapapeles, el texto queda seleccionado para copiarlo manualmente.
-
-WhatsApp requiere Internet. Web Share API y el portapapeles dependen del navegador y pueden estar limitados al abrir archivos locales. Su ausencia no impide calcular ni descargar el PDF.
-
-Si cambias cualquier dato después de calcular, el resultado y el informe anterior se invalidan. **Vuelve a calcular antes de descargar o compartir.**
-
-## Guardado y privacidad
-
-Los datos se guardan automáticamente en `localStorage`, con la clave `cuadrilla-gastos-v1`. Al volver a abrir el mismo archivo con el mismo navegador se recuperan, siempre que el navegador conserve su almacenamiento. Los resultados se vuelven a calcular.
-
-- No hay cuentas, cookies, backend, publicidad ni telemetría. Los nombres y gastos no se envían a servidores.
-- Compartir un PDF transmite los datos del informe al destino que tú elijas.
-- El almacenamiento depende del navegador, su perfil, el origen y, al usar `file://`, de cómo trate la ruta local. **Mover o renombrar el HTML puede hacer que no aparezcan los datos anteriores.** No se sincronizan entre dispositivos.
-- El modo privado y borrar los datos del navegador pueden eliminar la información guardada.
-- Si el almacenamiento está lleno o bloqueado, aparece un aviso y los datos siguen en memoria durante esa sesión. Conserva tu información antes de cerrar la pestaña.
-- La **papelera situada a la derecha de Calcular reparto** abre el modal para borrar todos los datos. Cancelar o pulsar Escape conserva todo; confirmar elimina los datos de esta aplicación y devuelve el criterio de niños a «pagan la mitad».
-
-## Compatibilidad y comprobaciones
-
-Utiliza una versión reciente de Chrome, Edge, Firefox o Safari con JavaScript activado. El reparto requiere soporte de BigInt y los modales usan `dialog`. La interfaz presenta tablas en escritorio y tarjetas editables en móvil.
-
-Comprobado con 19 pruebas de lógica, incluidos los casos límite monetarios y 5.000 repartos aleatorios; 17 recorridos automatizados de Chromium desde `file://` sin conexión; y una comprobación integrada en Firefox. Se han verificado la persistencia, los borrados, los nombres especiales, las alternativas de uso compartido y el bloqueo de informes desactualizados. Un PDF real de 35 familias y seis páginas conserva todos los importes y transferencias de la pantalla. La integración nativa de compartir se prueba mediante simulación con un archivo PDF real; su disponibilidad depende del dispositivo.
-
-## Archivos y licencia
-
-El repositorio publica únicamente `index.html`, este `README.md` y `LICENSE`. El CSS y JavaScript están dentro del HTML. No necesitas Node, npm, compiladores ni archivos auxiliares. Las evidencias y herramientas locales de comprobación quedan fuera de Git.
-
-El código propio se distribuye bajo [licencia MIT](LICENSE), copyright © 2026 Jon Bilbao. Los componentes de terceros conservan sus licencias y avisos integrados en `index.html`:
-
-- [jsPDF 4.2.1](https://github.com/parallax/jsPDF/releases/tag/v4.2.1), licencia MIT.
-- [DejaVu Sans](https://dejavu-fonts.github.io/), licencia Bitstream Vera / DejaVu, utilizada para el PDF.
-- Icono [Info de Font Awesome Free 7.3.1](https://fontawesome.com/icons/info?f=classic&s=solid), copyright Fonticons, Inc., bajo [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Se integra el SVG oficial con su atribución; no se carga una biblioteca de iconos.
+El botón azul **i**, fijo arriba a la derecha, abre estas instrucciones.
