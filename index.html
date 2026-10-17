@@ -150,6 +150,10 @@
       main {
         padding: 64px 0 20px;
       }
+      #expense-form {
+        padding-bottom: 50vh;
+        padding-bottom: 50svh;
+      }
       .card {
         background: var(--paper);
         border: 1px solid var(--line);
@@ -2547,7 +2551,9 @@ License: GPL-2+
             },
           ),
         );
-        $("add-family").addEventListener("click", () => {
+        $("add-family").addEventListener("click", (event) => {
+          const button = event.currentTarget;
+          const previousTop = Math.round(button.getBoundingClientRect().top);
           const family = {
             id: uid(),
             name: "",
@@ -2558,6 +2564,11 @@ License: GPL-2+
           model.families.push(family);
           $("families-body").append(makeRow(family));
           changed();
+          // Keep the add button under the same finger as the table grows.
+          window.scrollBy({
+            top: button.getBoundingClientRect().top - previousTop,
+            behavior: "auto",
+          });
         });
         // Delegation also covers newly added rows. Native date pickers keep
         // their own selection behavior; select() only affects editable text.
