@@ -41,12 +41,14 @@
       }
       button,
       input,
+      select,
       textarea {
         font: inherit;
       }
       button,
       a,
       input,
+      select,
       textarea {
         -webkit-tap-highlight-color: transparent;
       }
@@ -71,12 +73,13 @@
       button:focus-visible,
       a:focus-visible,
       input:focus-visible,
-      textarea:focus-visible,
-      summary:focus-visible {
+      select:focus-visible,
+      textarea:focus-visible {
         outline: 3px solid #d88d28;
         outline-offset: 3px;
       }
       input,
+      select,
       textarea {
         width: 100%;
         min-width: 0;
@@ -97,21 +100,9 @@
       input[type="date"] {
         min-height: 48px;
       }
-      input[type="radio"] {
-        accent-color: var(--green);
-        width: 20px;
-        min-height: 20px;
-        height: 20px;
-        flex: none;
-        margin: 0;
-      }
       label {
         font-size: 0.88rem;
         font-weight: 650;
-      }
-      label > input {
-        display: block;
-        margin-top: 0.45rem;
       }
       h1,
       h2,
@@ -156,58 +147,8 @@
         width: min(1056px, 100% - 40px);
         margin: auto;
       }
-      .topbar {
-        border-bottom: 1px solid var(--line);
-        background: #fcfdf9;
-      }
-      .topbar .container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        min-height: 76px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-        font-weight: 750;
-        letter-spacing: -0.025em;
-      }
-      .brand-mark {
-        display: grid;
-        place-items: center;
-        width: 36px;
-        height: 36px;
-        background: var(--green);
-        color: #fff;
-        border-radius: 11px;
-      }
-      .privacy {
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        color: var(--muted);
-      }
       main {
-        padding: 44px 0 0;
-      }
-      .eyebrow {
-        text-transform: uppercase;
-        font-size: 0.73rem;
-        letter-spacing: 0.15em;
-        font-weight: 750;
-        color: var(--green);
-        margin-bottom: 0.8rem;
-      }
-      .intro {
-        margin-bottom: 28px;
-      }
-      .intro p:last-child {
-        color: var(--muted);
-        max-width: 560px;
-        margin-bottom: 0;
+        padding: 64px 0 20px;
       }
       .card {
         background: var(--paper);
@@ -221,26 +162,6 @@
         display: grid;
         grid-template-columns: 1fr 230px;
         gap: 20px;
-      }
-      .optional {
-        font-weight: 400;
-        color: var(--muted);
-      }
-      .section-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 20px;
-      }
-      .step {
-        font-size: 0.74rem;
-        background: var(--green-soft);
-        color: var(--green);
-        padding: 0.3rem 0.6rem;
-        border-radius: 7px;
-        white-space: nowrap;
-        font-weight: 700;
       }
       .muted {
         color: var(--muted);
@@ -320,13 +241,24 @@
         display: none;
       }
       .add-family {
-        margin-top: 10px;
-        border: 1px dashed #94b8a7;
-        color: var(--green);
-        background: #f7fbf8;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
+        display: grid;
+        place-items: center;
+        margin: 0;
+        padding: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        border-color: var(--green);
+      }
+      .add-family:hover {
+        background: var(--green-dark);
+      }
+      .add-family svg {
+        width: 24px;
+        height: 24px;
+        stroke-width: 2.4;
       }
       .empty {
         color: var(--muted);
@@ -343,67 +275,18 @@
         gap: 12px;
         margin-top: 5px;
       }
-      .count {
-        font-size: 0.82rem;
-        color: var(--muted);
-      }
-      fieldset {
-        border: 0;
-        padding: 0;
-        margin: 0;
-        min-width: 0;
-      }
-      legend {
-        padding: 0;
-        font-size: 1.22rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        margin-bottom: 0.4rem;
-      }
-      .criteria {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-top: 20px;
-      }
-      .choice {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-        border: 1px solid var(--line);
-        padding: 17px 14px;
-        border-radius: 13px;
-        cursor: pointer;
-        background: #fff;
-        min-width: 0;
-      }
-      .choice:has(input:checked) {
-        border: 2px solid var(--green);
-        padding: 16px 13px;
-        background: var(--green-soft);
-      }
-      .choice strong,
-      .choice small {
-        display: block;
-      }
-      .choice strong {
-        font-size: 0.88rem;
-      }
-      .choice small {
-        font-size: 0.77rem;
-        font-weight: 400;
-        color: var(--muted);
-        margin-top: 3px;
-      }
       .calculate-row {
-        margin-top: 24px;
-        padding-top: 22px;
-        border-top: 1px solid var(--line);
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 20px;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .clear-all {
+        width: 52px;
+        min-height: 52px;
+        flex: none;
+        border-radius: 50%;
       }
       .primary {
         background: var(--green);
@@ -419,7 +302,7 @@
       }
       #calculate {
         min-height: 52px;
-        padding: 0.75rem 1.6rem;
+        padding: 0.75rem 1rem;
       }
       .notice {
         border-radius: 11px;
@@ -438,16 +321,6 @@
         gap: 15px;
         align-items: center;
         margin-bottom: 22px;
-      }
-      .result-check {
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        background: var(--green-soft);
-        color: var(--green);
-        flex: none;
       }
       .result-heading h2 {
         font-size: 1.6rem;
@@ -601,15 +474,8 @@
       .share-card {
         background: #f0f5ed;
       }
-      .share-card h3 {
-        margin-bottom: 0.35rem;
-      }
       .share-card .actions {
-        margin: 18px 0 12px;
-      }
-      .small-note {
-        font-size: 0.78rem;
-        color: var(--muted);
+        margin: 0 0 12px;
       }
       #share-message {
         margin: 12px 0;
@@ -628,46 +494,6 @@
         border: 1px solid var(--line);
         border-radius: 10px;
         margin-top: 15px;
-      }
-      footer {
-        padding: 10px 0 30px;
-        text-align: center;
-      }
-      footer .danger-link {
-        background: transparent;
-        color: var(--red);
-        border: 0;
-        font-size: 0.88rem;
-        font-weight: 500;
-        text-decoration: underline;
-        text-underline-offset: 4px;
-      }
-      #storage-status {
-        margin: 10px 0;
-        color: var(--muted);
-        font-size: 0.78rem;
-      }
-      .help {
-        font-size: 0.83rem;
-        color: var(--muted);
-        text-align: left;
-        max-width: 700px;
-        margin: 15px auto;
-      }
-      .help summary {
-        cursor: pointer;
-        text-align: center;
-        min-height: 35px;
-      }
-      .help p {
-        margin-top: 12px;
-      }
-      .footer-line {
-        border-top: 1px solid var(--line);
-        margin-top: 22px;
-        padding-top: 20px;
-        font-size: 0.76rem;
-        color: var(--muted);
       }
       dialog {
         border: 1px solid var(--line);
@@ -721,16 +547,7 @@
           width: calc(100% - 28px);
         }
         main {
-          padding-top: 28px;
-        }
-        .topbar .container {
-          min-height: 64px;
-        }
-        .privacy {
-          font-size: 0.72rem;
-        }
-        .privacy svg {
-          width: 15px;
+          padding-top: 52px;
         }
         .card {
           padding: 20px;
@@ -739,27 +556,6 @@
         .activity-fields {
           grid-template-columns: 1fr;
           gap: 16px;
-        }
-        .criteria {
-          grid-template-columns: 1fr;
-          gap: 9px;
-        }
-        .choice {
-          padding: 13px 14px;
-        }
-        .choice:has(input:checked) {
-          padding: 12px 13px;
-        }
-        .choice small {
-          margin-top: 1px;
-        }
-        .calculate-row {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 12px;
-        }
-        .calculate-row .muted {
-          text-align: center;
         }
         .families-table,
         .families-table tbody {
@@ -815,18 +611,6 @@
         .families-table input[data-field="adults"],
         .families-table input[data-field="children"] {
           text-align: left;
-        }
-        .table-foot {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-        .add-family {
-          width: 100%;
-          justify-content: center;
-          margin-top: 0;
-        }
-        .count {
-          align-self: center;
         }
         .stats {
           grid-template-columns: 1fr 1fr;
@@ -902,9 +686,8 @@
         body {
           background: white;
         }
-        .topbar,
+        .info-button,
         form,
-        footer,
         .share-card,
         #dirty-notice {
           display: none !important;
@@ -917,13 +700,11 @@
           width: 100%;
         }
       }
-      .brand-group {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        min-width: 0;
-      }
       .info-button {
+        position: fixed;
+        top: 12px;
+        right: 16px;
+        z-index: 10;
         display: grid;
         place-items: center;
         width: 44px;
@@ -943,62 +724,50 @@
         fill: currentColor;
         stroke: none;
       }
+
       @media (max-width: 700px) {
-        .topbar .privacy {
-          display: none;
+        .info-button {
+          top: 10px;
+          right: 10px;
+          width: 32px;
+          height: 32px;
+        }
+        .info-button svg {
+          width: 12px;
+          height: 16px;
+        }
+        #calculate {
+          flex: 1;
+        }
+      }
+      @media print {
+        .info-button {
+          display: none !important;
         }
       }
     </style>
   </head>
   <body>
-    <header class="topbar">
-      <div class="container">
-        <div class="brand-group">
-          <a
-            class="info-button"
-            href="https://github.com/Danebae/repartidor#readme"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Información e instrucciones (abre el README en GitHub)"
-            title="Información e instrucciones"
-            ><svg
-              aria-hidden="true"
-              focusable="false"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 192 512"
-            >
-              <!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc. -->
-              <path
-                fill="currentColor"
-                d="M48 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM0 192c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 256 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-224-32 0c-17.7 0-32-14.3-32-32z"
-              /></svg
-          ></a>
-          <div class="brand">
-            <span class="brand-mark" aria-hidden="true"
-              ><svg viewBox="0 0 24 24">
-                <path d="M4 7h16M4 17h16M9 3 7 21M17 3l-2 18" /></svg
-            ></span>
-            La cuadrilla
-          </div>
-        </div>
-        <span class="privacy"
-          ><svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="5" y="10" width="14" height="11" rx="2" />
-            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-          </svg>
-          Solo en tu dispositivo</span
-        >
-      </div>
-    </header>
-    <main class="container">
-      <div class="intro">
-        <p class="eyebrow">Buenos planes. Cuentas claras.</p>
-        <h1>Gastos de la cuadrilla</h1>
-        <p>
-          Cada familia pone lo que puede. Reparte los gastos y descubre quién
-          paga a quién, hasta el último céntimo.
-        </p>
-      </div>
+    <a
+      class="info-button"
+      href="https://github.com/Danebae/repartidor#readme"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Información e instrucciones (abre el README en GitHub)"
+      title="Información e instrucciones"
+      ><svg
+        aria-hidden="true"
+        focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 192 512"
+      >
+        <!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc. -->
+        <path
+          fill="currentColor"
+          d="M48 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM0 192c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 256 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-224-32 0c-17.7 0-32-14.3-32-32z"
+        /></svg
+    ></a>
+    <main class="container" aria-label="Reparto de gastos">
       <noscript
         ><p class="notice error-notice">
           Activa JavaScript en tu navegador para editar familias y calcular el
@@ -1014,43 +783,31 @@
       <form id="expense-form" novalidate>
         <section class="card" aria-label="Actividad">
           <div class="activity-fields">
-            <label for="activity"
-              >Nombre de la actividad<input
+            <div>
+              <input
                 id="activity"
                 name="activity"
                 maxlength="180"
-                placeholder="Ej. Barbacoa del sábado"
+                placeholder="Actividad"
+                aria-label="Actividad"
                 autocomplete="off"
-                aria-describedby="activity-error" /><span
-                id="activity-error"
-                class="error"
-                hidden
-              ></span></label
-            ><label for="activity-date"
-              >Fecha <span class="optional">(opcional)</span
-              ><input
+                aria-describedby="activity-error"
+              />
+              <span id="activity-error" class="error" hidden></span>
+            </div>
+            <div>
+              <input
                 id="activity-date"
                 name="date"
                 type="date"
-                aria-describedby="date-error" /><span
-                id="date-error"
-                class="error"
-                hidden
-              ></span
-            ></label>
+                aria-label="Fecha de actividad (opcional)"
+                aria-describedby="date-error"
+              />
+              <span id="date-error" class="error" hidden></span>
+            </div>
           </div>
         </section>
-        <section class="card" aria-labelledby="families-title">
-          <div class="section-head">
-            <div>
-              <h2 id="families-title">¿Quiénes os apuntáis?</h2>
-              <p class="muted">
-                Una fila por familia o persona. Anota lo que ha adelantado cada
-                una.
-              </p>
-            </div>
-            <span class="step">01 / Familias</span>
-          </div>
+        <section id="families-section" class="card" aria-label="Familias">
           <table class="families-table">
             <caption class="sr-only">
               Unidades familiares y gastos adelantados
@@ -1066,45 +823,44 @@
             </thead>
             <tbody id="families-body"></tbody>
           </table>
-          <p id="empty-families" class="empty">
-            Todo buen plan empieza con alguien.<br />Añade la primera familia
-            para empezar.
-          </p>
           <div class="table-foot">
-            <button id="add-family" class="add-family" type="button">
-              <span aria-hidden="true">＋</span> Añadir familia</button
-            ><span id="family-count" class="count" aria-live="polite"></span>
+            <button
+              id="add-family"
+              class="add-family"
+              type="button"
+              title="Añadir familia"
+              aria-label="Añadir familia"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
           </div>
         </section>
-        <section class="card" aria-labelledby="children-title">
-          <fieldset>
-            <legend id="children-title">
-              ¿Cómo cuentan los niños en el reparto?
-            </legend>
-            <p class="muted">Elige el criterio que habéis acordado.</p>
-            <div class="criteria">
-              <label class="choice"
-                ><input type="radio" name="factor" value="0" /><span
-                  ><strong>Los niños no pagan</strong
-                  ><small>Solo cuentan los adultos · peso 0</small></span
-                ></label
-              ><label class="choice"
-                ><input type="radio" name="factor" value="0.5" checked /><span
-                  ><strong>Los niños pagan la mitad</strong
-                  ><small>Cada niño cuenta como 0,5 adultos</small></span
-                ></label
-              ><label class="choice"
-                ><input type="radio" name="factor" value="1" /><span
-                  ><strong>Como un adulto</strong
-                  ><small>Los niños pagan como un adulto · peso 1</small></span
-                ></label
-              >
-            </div>
-          </fieldset>
+        <section class="card" aria-label="Configuración del reparto">
+          <select
+            id="children-factor"
+            name="factor"
+            aria-label="Cómo pagan los niños"
+          >
+            <option value="0">Los niños no pagan</option>
+            <option value="0.5" selected>Los niños pagan la mitad</option>
+            <option value="1">Los niños pagan como un adulto</option>
+          </select>
           <div class="calculate-row">
-            <span class="muted">Un reparto justo, ajustado a céntimos.</span
-            ><button id="calculate" class="primary" type="submit">
-              Calcular reparto <span aria-hidden="true">→</span>
+            <button id="calculate" class="primary" type="submit">
+              Calcular reparto
+            </button>
+            <button
+              id="clear-all"
+              class="delete clear-all"
+              type="button"
+              title="Borrar todos los datos"
+              aria-label="Borrar todos los datos"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" />
+              </svg>
             </button>
           </div>
           <p
@@ -1127,11 +883,8 @@
       >
         <div class="card">
           <div class="result-heading">
-            <span class="result-check" aria-hidden="true"
-              ><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg
-            ></span>
             <div>
-              <h2 id="results-title">Las cuentas, claras</h2>
+              <h2 id="results-title">Reparto</h2>
               <p id="result-activity" class="muted"></p>
             </div>
           </div>
@@ -1154,7 +907,7 @@
             </div>
           </dl>
           <p id="criterion-note" class="criterion-note"></p>
-          <h3>El balance de cada familia</h3>
+          <h3>Balances</h3>
           <table class="result-table">
             <caption class="sr-only">
               Gastos, cuotas y saldos de cada familia
@@ -1170,26 +923,15 @@
             </thead>
             <tbody id="balance-body"></tbody>
           </table>
-          <p class="small-note" style="margin: 16px 0 0">
-            Saldo positivo: recibe. Saldo negativo: paga. Las cuotas suman
-            exactamente el gasto total.
-          </p>
         </div>
         <div class="card">
           <h2>¿Quién paga a quién?</h2>
-          <p class="muted">
-            Con estas transferencias, las cuentas quedan saldadas.
-          </p>
           <ol id="transfer-list" class="transfer-list"></ol>
           <p id="settled-note" class="empty" hidden>
-            Las cuentas ya están saldadas. No hace falta ninguna transferencia.
+            No hay transferencias pendientes.
           </p>
         </div>
         <div class="card share-card">
-          <h3>Listo para compartir con la cuadrilla</h3>
-          <p class="muted">
-            El PDF incluye las familias, las cuotas y todas las transferencias.
-          </p>
           <div class="actions">
             <button type="button" id="download-pdf" class="primary" disabled>
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1202,11 +944,6 @@
               Copiar mensaje
             </button>
           </div>
-          <p class="small-note">
-            En móviles compatibles se abre el menú del sistema: elige WhatsApp y
-            la conversación. En otros navegadores se descarga el PDF para
-            adjuntarlo manualmente.
-          </p>
           <label for="share-message" class="sr-only"
             >Mensaje para acompañar al PDF</label
           ><textarea id="share-message" readonly></textarea>
@@ -1227,54 +964,6 @@
           </div>
         </div>
       </section>
-      <footer>
-        <button type="button" id="clear-all" class="danger-link">
-          Limpiar todos los datos
-        </button>
-        <p id="storage-status" role="status">
-          Los datos se guardan automáticamente en este navegador.
-        </p>
-        <details class="help">
-          <summary>Sin conexión, privacidad y ayuda</summary>
-          <p>
-            Todo funciona sin Internet, también el PDF: este archivo integra
-            jsPDF 4.2.1 y la fuente DejaVu Sans. No necesitas instalar nada ni
-            mantener archivos adicionales.
-          </p>
-          <p>
-            Los nombres y gastos se procesan aquí y no se envían a ningún
-            servidor. Al compartir, tú eliges el destino del PDF. Los datos
-            locales no se sincronizan entre dispositivos. Conserva este HTML en
-            el mismo lugar: el almacenamiento de archivos locales depende del
-            navegador y puede borrarse en modo privado o al limpiar sus datos.
-          </p>
-          <p>
-            Introduce los gastos como 12,50 o 12.50, sin separadores de miles.
-            Puedes tener familias formadas solo por niños. El nombre de la
-            actividad es opcional. Si dos familias tienen el mismo nombre, se
-            identifican con su número de fila en el resultado.
-          </p>
-          <p>
-            WhatsApp necesita conexión. El navegador puede limitar el
-            portapapeles y el uso compartido al abrir archivos locales. Siempre
-            puedes descargar el PDF y copiar el mensaje manualmente.
-          </p>
-          <p>
-            Biblioteca:
-            <a
-              href="https://github.com/parallax/jsPDF/releases/tag/v4.2.1"
-              target="_blank"
-              rel="noopener noreferrer"
-              >jsPDF 4.2.1</a
-            >
-            (licencia MIT). Fuente DejaVu Sans (licencia Bitstream Vera /
-            DejaVu). Las licencias se conservan en el código de este archivo.
-          </p>
-        </details>
-        <div class="footer-line">
-          Hecho para compartir los buenos momentos. Y las cuentas.
-        </div>
-      </footer>
     </main>
     <dialog
       id="confirm-dialog"
@@ -2115,8 +1804,6 @@ License: GPL-2+
                   )
                     throw new Error("field");
               }
-              $("storage-status").textContent =
-                "Datos recuperados. Vuelve a calcular para ver el reparto.";
               return {
                 activity: value.activity,
                 date: value.date,
@@ -2134,7 +1821,7 @@ License: GPL-2+
               // reset before saving, so a browser problem cannot destroy old data.
               storageBlocked = true;
               warning(
-                "No se han podido recuperar los datos guardados. Se conservan sin sobrescribir. Puedes trabajar en esta pestaña; para volver a guardar, usa Limpiar todos los datos.",
+                "No se han podido recuperar los datos guardados. Se conservan sin sobrescribir. Puedes trabajar en esta pestaña; para volver a guardar, usa el botón Borrar todos los datos.",
               );
               return blank();
             }
@@ -2146,15 +1833,11 @@ License: GPL-2+
                 KEY,
                 JSON.stringify({ version: 1, ...model }),
               );
-              $("storage-status").textContent =
-                "Guardado automáticamente en este navegador.";
               $("storage-warning").hidden = true;
             } catch {
               warning(
                 "No se han podido guardar los últimos cambios: el almacenamiento está lleno o bloqueado. Los datos siguen en esta pestaña; no la cierres sin conservar tu informe o tus datos.",
               );
-              $("storage-status").textContent =
-                "Cambios en memoria. No se ha confirmado su guardado.";
             }
           },
           clear() {
@@ -2162,8 +1845,6 @@ License: GPL-2+
               localStorage.removeItem(KEY);
               storageBlocked = false;
               $("storage-warning").hidden = true;
-              $("storage-status").textContent =
-                "Datos borrados. Todo listo para un nuevo plan.";
               return true;
             } catch {
               warning(
@@ -2252,21 +1933,13 @@ License: GPL-2+
           tr.append(td);
           return tr;
         }
-        function familyCount() {
-          const count = model.families.length;
-          $("empty-families").hidden = count > 0;
-          $("family-count").textContent =
-            count === 1 ? "1 familia" : `${count} familias`;
-        }
         function renderModel() {
           $("activity").value = model.activity;
           $("activity-date").value = model.date;
-          for (const radio of document.querySelectorAll("[name=factor]"))
-            radio.checked = radio.value === model.factor;
+          $("children-factor").value = model.factor;
           const fragment = document.createDocumentFragment();
           for (const family of model.families) fragment.append(makeRow(family));
           $("families-body").replaceChildren(fragment);
-          familyCount();
         }
         function displayErrors(errors) {
           document
@@ -2586,11 +2259,7 @@ License: GPL-2+
           );
           heading("3. ¿Quién paga a quién?");
           if (!r.transfers.length)
-            paragraph(
-              "Las cuentas ya están saldadas. No hace falta ninguna transferencia.",
-              10,
-              green,
-            );
+            paragraph("No hay transferencias pendientes.", 10, green);
           else
             r.transfers.forEach((t, i) => {
               const text = `${i + 1}. ${r.rows[t.from].label} → ${r.rows[t.to].label}: ${Reparto.money(t.amount)}`;
@@ -2784,8 +2453,8 @@ License: GPL-2+
         });
         $("clear-all").addEventListener("click", () =>
           openModal(
-            "¿Quieres empezar de cero?",
-            "Se eliminarán todas las familias, sus gastos, el nombre y la fecha de la actividad y la configuración del reparto. Esta acción no se puede deshacer.",
+            "¿Borrar todos los datos?",
+            "Se borrarán la actividad, las familias y sus gastos. Esta acción no se puede deshacer.",
             "Sí, borrar todo",
             () => {
               if (!Storage.clear()) return;
@@ -2810,7 +2479,6 @@ License: GPL-2+
           };
           model.families.push(family);
           $("families-body").append(makeRow(family));
-          familyCount();
           changed();
           $(family.id + "-name").focus();
         });
@@ -2844,7 +2512,6 @@ License: GPL-2+
             () => {
               model.families = model.families.filter((f) => f.id !== family.id);
               row.remove();
-              familyCount();
               changed();
               $("add-family").focus();
             },
@@ -2859,13 +2526,10 @@ License: GPL-2+
             setFieldError(event.target, "");
             changed();
           });
-        for (const radio of document.querySelectorAll("[name=factor]"))
-          radio.addEventListener("change", (event) => {
-            if (event.target.checked) {
-              model.factor = event.target.value;
-              changed();
-            }
-          });
+        $("children-factor").addEventListener("change", (event) => {
+          model.factor = event.target.value;
+          changed();
+        });
         $("expense-form").addEventListener("submit", (event) => {
           event.preventDefault();
           invalidate();

@@ -12,13 +12,13 @@ Aplicación web para repartir los gastos de una comida, excursión, barbacoa o f
    git clone git@github.com:Danebae/repartidor.git
    ```
 
-2. Escribe el nombre de la actividad y, si quieres, su fecha.
-3. Pulsa **Añadir familia**. Introduce un nombre, el número de adultos y niños y el dinero que ha adelantado cada familia. Repite para todas las participantes.
-4. Elige cómo cuentan los niños: **no pagan**, **pagan la mitad** o **pagan como un adulto**.
+2. Escribe el nombre en el campo **Actividad** y, si quieres, introduce la fecha.
+3. Pulsa el botón verde **+** para añadir una familia. Introduce un nombre, el número de adultos y niños y el dinero que ha adelantado cada familia. Repite para todas las participantes.
+4. En el selector, elige cómo cuentan los niños: **no pagan**, **pagan la mitad** o **pagan como un adulto**.
 5. Pulsa **Calcular reparto** y revisa los balances y **¿Quién paga a quién?**.
 6. Descarga el PDF o utiliza **Compartir por WhatsApp**.
 
-El botón azul de información de la esquina superior izquierda abre estas instrucciones en GitHub. Ese enlace necesita conexión; el cálculo y el PDF funcionan sin ella.
+El botón azul de información, fijo en la esquina superior derecha y más pequeño en móvil, abre estas instrucciones en GitHub. Ese enlace necesita conexión; el cálculo y el PDF funcionan sin ella.
 
 ## Familias e importes
 
@@ -63,7 +63,7 @@ Los datos se guardan automáticamente en `localStorage`, con la clave `cuadrilla
 - El almacenamiento depende del navegador, su perfil, el origen y, al usar `file://`, de cómo trate la ruta local. **Mover o renombrar el HTML puede hacer que no aparezcan los datos anteriores.** No se sincronizan entre dispositivos.
 - El modo privado y borrar los datos del navegador pueden eliminar la información guardada.
 - Si el almacenamiento está lleno o bloqueado, aparece un aviso y los datos siguen en memoria durante esa sesión. Conserva tu información antes de cerrar la pestaña.
-- **Limpiar todos los datos** abre un modal. Cancelar o pulsar Escape conserva todo; confirmar elimina los datos de esta aplicación y devuelve el criterio de niños a «pagan la mitad».
+- La **papelera situada a la derecha de Calcular reparto** abre el modal para borrar todos los datos. Cancelar o pulsar Escape conserva todo; confirmar elimina los datos de esta aplicación y devuelve el criterio de niños a «pagan la mitad».
 
 ## Compatibilidad y comprobaciones
 
