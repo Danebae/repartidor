@@ -2546,6 +2546,11 @@ License: GPL-2+
           changed();
           $(family.id + "-name").focus();
         });
+        // Delegation also covers newly added rows. Native date pickers keep
+        // their own selection behavior; select() only affects editable text.
+        $("expense-form").addEventListener("focusin", (event) => {
+          if (event.target.matches("input")) event.target.select();
+        });
         $("families-body").addEventListener("input", (event) => {
           const input = event.target.closest("input[data-field]");
           if (!input) return;
