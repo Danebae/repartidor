@@ -148,7 +148,17 @@
         margin: auto;
       }
       main {
+        position: relative;
         padding: 64px 0 20px;
+      }
+      .app-title {
+        position: absolute;
+        top: 16px;
+        left: 0;
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
       }
       #expense-form {
         padding-bottom: 50vh;
@@ -535,6 +545,10 @@
         main {
           padding-top: 52px;
         }
+        .app-title {
+          top: 12px;
+          font-size: 1.3rem;
+        }
         .card {
           padding: 20px;
           border-radius: 16px;
@@ -807,6 +821,7 @@
         hidden
       ></p>
       <form id="expense-form" novalidate>
+        <h1 class="app-title">Urban Chines</h1>
         <section class="card" aria-label="Actividad">
           <div class="activity-fields">
             <div>
